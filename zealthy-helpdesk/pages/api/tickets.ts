@@ -9,6 +9,13 @@ export default async function handler(
   //   console.log('req is: ', req, 'res is: ', res);
 
   try {
+    if (req.method === 'GET') {
+      const getTicketsQuery = `SELECT * FROM tickets
+      ORDER BY ticket_id ASC`;
+      const response = await db.query(getTicketsQuery);
+      const tickets = response.rows;
+      return res.status(200).json(tickets);
+    }
     if (req.method === 'POST') {
       console.log(req.body);
       const { name, email, description, summary } = req.body;
