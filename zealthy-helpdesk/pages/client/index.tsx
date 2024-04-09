@@ -8,9 +8,9 @@ export default function Home() {
   return (
     <>
       <Head>
-        <title>Zealthy Help Desk - User Portal</title>
+        <title>Help Desk - User Portal</title>
       </Head>
-      <Header />
+      <Header currentView='user'/>
       <main>
         <div className="w-60 bg-gray-200 border rounded-sm">
           <h2>Create a new ticket:</h2>

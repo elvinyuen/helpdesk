@@ -6,9 +6,9 @@ export default function Home() {
   return (
     <>
       <Head>
-        <title>Zealthy Help Desk - Admin Portal</title>
+        <title>Help Desk - Admin Portal</title>
       </Head>
-      <Header />
+      <Header currentView='admin'/>
       <main>
         <div className="bg-gray-200 border rounded-sm">
           <h2>View all tickets:</h2>

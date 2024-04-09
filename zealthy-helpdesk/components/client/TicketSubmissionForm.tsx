@@ -1,21 +1,32 @@
+import { useState } from 'react';
 import axios, { AxiosError } from 'axios';
+import Input from './Input';
 
 export default function TicketSubmissionForm() {
-  async function handleFormSubmission(event) {
+  async function handleFormSubmission(event: React.FormEvent) {
     event.preventDefault();
-    const { name, email, summary, description } = event.target;
+    const form = event.target as HTMLFormElement;
+
+    const name = form.elements.namedItem('name') as HTMLInputElement;
+    const email = form.elements.namedItem('email') as HTMLInputElement;
+    const summary = form.elements.namedItem('summary') as HTMLInputElement;
+    const description = form.elements.namedItem(
+      'description'
+    ) as HTMLInputElement;
+
     const params = {
       name: name.value,
       email: email.value,
       summary: summary.value,
       description: description.value,
     };
-    console.log(params);
+
     try {
       console.log('inside axios');
       await axios.post(`api/tickets`, {
         ...params,
       });
+      form.reset();
     } catch (error) {
       if (axios.isAxiosError(error)) {
         console.error((error as AxiosError).response);
@@ -23,45 +34,48 @@ export default function TicketSubmissionForm() {
         console.error(error);
       }
     }
+    return false;
   }
 
   return (
     <div className="form-container">
       <form action="" className="" onSubmit={handleFormSubmission}>
-        <label htmlFor="nameInput">Name:</label>
-        <input
-          id="nameInput"
+        <Input
+          label="Name: "
+          id="name"
           type="text"
           name="name"
           placeholder="Jane Doe"
           maxLength={100}
-          required
+          required={true}
         />
-        <label htmlFor="emailInput">Email:</label>
-        <input
+        <Input
+          label="Email: "
           type="email"
           name="email"
-          id="emailInput"
+          id="email"
           placeholder="name@domain.com"
           maxLength={320}
-          required
+          required={true}
         />
-        <label htmlFor="summaryInput">Summary</label>
-        <input
+        <Input
+          label="Summary: "
           type="text"
           name="summary"
-          id="summaryInput"
-          placeholder="Enter subject"
+          id="summary"
+          placeholder="Enter a brief summary of issue"
           maxLength={255}
-          required
+          required={true}
         />
-        <label htmlFor="description">Description</label>
-        <textarea
-          id="descriptionInput"
+
+        <Input
+          label="Description: "
+          type="textarea"
+          id="description"
           name="description"
-          placeholder="Enter description of issue"
+          placeholder="Tell us more about your issue"
           maxLength={500}
-          required
+          required={true}
         />
         <button>Submit Ticket</button>
       </form>
