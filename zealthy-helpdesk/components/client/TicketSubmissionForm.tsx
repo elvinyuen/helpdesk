@@ -1,6 +1,6 @@
 import axios, { AxiosError } from 'axios';
 
-export default function Form() {
+export default function TicketSubmissionForm() {
   async function handleFormSubmission(event) {
     event.preventDefault();
     const { name, email, summary, description } = event.target;
