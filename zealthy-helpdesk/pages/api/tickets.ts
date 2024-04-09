@@ -30,12 +30,26 @@ export default async function handler(
       console.log('ticket successfully saved');
       return res.status(201).json(response.rows[0]);
     }
+    if (req.method === 'PUT') {
+      const { ticket_id, status, reply } = req.body;
+      const params = [status, reply, ticket_id];
+
+      const updateTicketQuery = `
+        UPDATE tickets
+        SET status = $1, reply = $2, updated_at = CURRENT_TIMESTAMP
+        WHERE ticket_id = $3
+        RETURNING *
+        `;
+      const response = await db.query(updateTicketQuery, params);
+      console.log('ticket successfully updated');
+      return res.status(200).json(response.rows[0]);
+    }
   } catch (error) {
     return {
       log: `Error occurred in ticketController middleware, ${error}`,
       status: 500,
       message: {
-        error: 'Unable to handle request to create a ticket.',
+        error: 'Unable to handle request to tickets API.',
       },
     };
   }

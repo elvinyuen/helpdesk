@@ -44,6 +44,7 @@ export default function TicketList() {
               key={index}
               activeHiddenId={activeHiddenId}
               setActiveHiddenId={setActiveHiddenId}
+              getTickets={getTickets}
             />
           ))}
         </tbody>
