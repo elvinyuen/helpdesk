@@ -10,7 +10,7 @@ export default function Home() {
       </Head>
       <Header />
       <main>
-        <div className="w-96 bg-gray-200 border rounded-sm">
+        <div className="bg-gray-200 border rounded-sm">
           <h2>View all tickets:</h2>
           <TicketList />
         </div>

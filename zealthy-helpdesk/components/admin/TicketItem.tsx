@@ -1,10 +1,17 @@
 import { useState } from 'react';
+import axios, { AxiosError } from 'axios';
 
 export default function TicketItem({
   ticket,
   activeHiddenId,
   setActiveHiddenId,
+  getTickets,
 }) {
+  const [updatedStatus, setUpdatedStatus] = useState(ticket.status);
+  const [updatedReply, setUpdatedReply] = useState(
+    ticket.reply ? ticket.reply : ''
+  );
+
   function showHiddenRow(ticketId) {
     const hiddenRow = document.getElementById(`hidden-row-${ticketId}`);
     if (activeHiddenId !== null && activeHiddenId !== ticketId) {
@@ -21,6 +28,14 @@ export default function TicketItem({
     }
   }
 
+  function handleStatusChange(event) {
+    setUpdatedStatus(event.target.value);
+  }
+
+  function handleReplyChange(event) {
+    setUpdatedReply(event.target.value);
+  }
+
   const {
     ticket_id,
     created_at,
@@ -31,6 +46,36 @@ export default function TicketItem({
     status,
     reply,
   } = ticket;
+
+  function handleUpdateTicket() {
+    const ticketUpdates = {
+      ticket_id,
+      status: updatedStatus,
+      reply: updatedReply,
+    };
+    console.log(
+      'inside handleupdateticket and ticketUpdates are: ',
+      ticketUpdates
+    );
+    updateTicket(ticketUpdates);
+  }
+
+  async function updateTicket(newData) {
+    try {
+      console.log('inside axios put request');
+      await axios.put(`api/tickets`, {
+        ...newData,
+      });
+      getTickets();
+      showHiddenRow(ticket_id)
+    } catch (error) {
+      if (axios.isAxiosError(error)) {
+        console.error((error as AxiosError).response);
+      } else {
+        console.error(error);
+      }
+    }
+  }
 
   return (
     <>
@@ -44,9 +89,31 @@ export default function TicketItem({
       </tr>
       <tr id={`hidden-row-${ticket_id}`} className="hidden">
         <td colSpan="2">{description}</td>
-        <td colSpan="2">{reply}</td>
-        <td>update status</td>
-        <td>save update</td>
+        <td colSpan="2">
+          <textarea
+            name=""
+            id=""
+            cols="30"
+            rows="10"
+            onChange={handleReplyChange}
+            value={updatedReply}
+          ></textarea>
+        </td>
+        <td>
+          <select
+            name={status}
+            id=""
+            value={updatedStatus}
+            onChange={handleStatusChange}
+          >
+            <option value="new">New</option>
+            <option value="in-progress">In Progress</option>
+            <option value="resolved">Resolved</option>
+          </select>
+        </td>
+        <td>
+          <button onClick={handleUpdateTicket}>Save Updates</button>
+        </td>
       </tr>
     </>
   );
