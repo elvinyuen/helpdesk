@@ -1,10 +1,11 @@
 import { useState, useEffect } from 'react';
 import axios, { AxiosError } from 'axios';
 import TicketItem from './TicketItem';
+import { TicketType } from '@/types';
 
 export default function TicketList() {
-  const [tickets, setTickets] = useState([]);
-  const [activeHiddenId, setActiveHiddenId] = useState(null);
+  const [tickets, setTickets] = useState<TicketType[]>([]);
+  const [activeHiddenId, setActiveHiddenId] = useState<number | null>(null);
 
   useEffect(() => {
     getTickets();

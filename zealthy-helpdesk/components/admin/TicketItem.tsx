@@ -1,38 +1,56 @@
 import { useState } from 'react';
 import axios, { AxiosError } from 'axios';
+import { TicketType } from '@/types';
+
+interface TicketProps {
+  ticket: TicketType;
+  activeHiddenId: number | null;
+  setActiveHiddenId: React.Dispatch<React.SetStateAction<TicketProps["activeHiddenId"]>>;
+  getTickets: () => Promise<void>;
+}
+
+interface TicketUpdatesType {
+  ticket_id: number;
+  status: string;
+  reply: string;
+}
 
 export default function TicketItem({
   ticket,
   activeHiddenId,
   setActiveHiddenId,
   getTickets,
-}) {
+}: TicketProps) {
   const [updatedStatus, setUpdatedStatus] = useState(ticket.status);
   const [updatedReply, setUpdatedReply] = useState(
     ticket.reply ? ticket.reply : ''
   );
 
-  function showHiddenRow(ticketId) {
+  function showHiddenRow(ticketId: number) {
     const hiddenRow = document.getElementById(`hidden-row-${ticketId}`);
     if (activeHiddenId !== null && activeHiddenId !== ticketId) {
       const activeHiddenRow = document.getElementById(
         `hidden-row-${activeHiddenId}`
       );
-      activeHiddenRow.classList.add('hidden');
+      if (activeHiddenRow) {
+        activeHiddenRow.classList.add('hidden');
+      }
     }
-    hiddenRow.classList.toggle('hidden');
-    if (!hiddenRow.classList.contains('hidden')) {
-      setActiveHiddenId(ticketId);
-    } else {
-      setActiveHiddenId(null);
+    if (hiddenRow) {
+      hiddenRow.classList.toggle('hidden');
+      if (!hiddenRow.classList.contains('hidden')) {
+        setActiveHiddenId(ticketId);
+      } else {
+        setActiveHiddenId(null);
+      }
     }
   }
 
-  function handleStatusChange(event) {
+  function handleStatusChange(event: React.ChangeEvent<HTMLSelectElement>) {
     setUpdatedStatus(event.target.value);
   }
 
-  function handleReplyChange(event) {
+  function handleReplyChange(event: React.ChangeEvent<HTMLTextAreaElement>) {
     setUpdatedReply(event.target.value);
   }
 
@@ -48,26 +66,21 @@ export default function TicketItem({
   } = ticket;
 
   function handleUpdateTicket() {
-    const ticketUpdates = {
+    const ticketUpdates:TicketUpdatesType = {
       ticket_id,
       status: updatedStatus,
       reply: updatedReply,
     };
-    console.log(
-      'inside handleupdateticket and ticketUpdates are: ',
-      ticketUpdates
-    );
     updateTicket(ticketUpdates);
   }
 
-  async function updateTicket(newData) {
+  async function updateTicket(newData: TicketUpdatesType) {
     try {
-      console.log('inside axios put request');
       await axios.put(`api/tickets`, {
         ...newData,
       });
       getTickets();
-      showHiddenRow(ticket_id)
+      showHiddenRow(ticket_id);
     } catch (error) {
       if (axios.isAxiosError(error)) {
         console.error((error as AxiosError).response);
@@ -88,13 +101,13 @@ export default function TicketItem({
         <td>{activeHiddenId === ticket_id ? 'uparrow' : 'downarrow'}</td>
       </tr>
       <tr id={`hidden-row-${ticket_id}`} className="hidden">
-        <td colSpan="2">{description}</td>
-        <td colSpan="2">
+        <td colSpan={2}>{description}</td>
+        <td colSpan={2}>
           <textarea
             name=""
             id=""
-            cols="30"
-            rows="10"
+            // cols="30"
+            // rows="10"
             onChange={handleReplyChange}
             value={updatedReply}
           ></textarea>
