@@ -13,10 +13,9 @@ export default function Home() {
       <Header currentView="user" />
       <main className="bg-dark-cream justify-center items-center w-[1200px] mt-[3em] ml-auto mr-auto flex rounded-[60px] pt-[40px] pb-[40px]">
         <section>
-          <h2 className="text-center mt-0 mb- font-[Mulish,_sans-serif] text-[36px] font-bold leading-[44px]">
+          <h2 className="text-center mt-0 mb-3 font-[Mulish,_sans-serif] text-[36px] font-bold leading-[44px] color-dark-gray">
             Submit a new support request
           </h2>
-          <p className='w-[500px] py-2 text-sm'>Please provide your name, email address, the issue you are facing and any additional details in the form below.</p>
           <TicketSubmissionForm />
         </section>
       </main>

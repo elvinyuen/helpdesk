@@ -13,7 +13,7 @@ export default function Header({ currentView }: HeaderProps) {
           className="float-left text-[#333] no-underline relative
 "
         >
-          <h1 className="text-center font-[Mulish,_sans-serif] text-[50px] font-bold leading-[44px]">
+          <h1 className="color-dark-gray text-center font-[Mulish,_sans-serif] text-[50px] font-bold leading-[44px] [text-shadow:0_0_20px_light-gray]">
             {currentView === 'user' ? 'User' : 'Admin'} Portal
           </h1>
         </div>
