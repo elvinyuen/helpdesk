@@ -14,7 +14,6 @@ export default function TicketList() {
   async function getTickets() {
     try {
       const { data } = await axios.get(`/api/tickets`);
-      console.log(data);
       setTickets(data);
     } catch (error) {
       if (axios.isAxiosError(error)) {
@@ -26,16 +25,32 @@ export default function TicketList() {
   }
 
   return (
-    <div>
-      <table>
-        <thead>
+    <div className="tickets-container w-[1200px] pl-[1em] pr-[1em] ">
+      <table className="w-full text-left table-fixed text-dark-gray">
+        <thead className="uppercase bg-green text-white">
           <tr>
-            <th>Ticket ID</th>
-            <th>Last Updated</th>
-            <th>Name</th>
-            <th>Summary</th>
-            <th>Status</th>
-            <th></th>
+            <th scope="col" className="w-[60px] px-5 py-2 rounded-tl-[20px]">
+              ID
+            </th>
+            <th scope="col" className="w-[150px] px-5 py-2">
+              Last Updated
+            </th>
+            <th scope="col" className="w-[120px] px-5 py-2">
+              Name
+            </th>
+            <th scope="col" className="w-[160px] px-5 py-2">
+              Email
+            </th>
+            <th scope="col" className="w-[200px] px-5 py-2">
+              Summary
+            </th>
+            <th scope="col" className="w-[150px] px-5 py-2">
+              Status
+            </th>
+            <th
+              scope="col"
+              className="w-[60px] px-5 py-2 rounded-tr-[20px]"
+            ></th>
           </tr>
         </thead>
         <tbody>
@@ -46,6 +61,7 @@ export default function TicketList() {
               activeHiddenId={activeHiddenId}
               setActiveHiddenId={setActiveHiddenId}
               getTickets={getTickets}
+              last={index === tickets.length - 1}
             />
           ))}
         </tbody>

@@ -8,12 +8,17 @@ export default function Home() {
       <Head>
         <title>Help Desk - Admin Portal</title>
       </Head>
-      <Header currentView='admin'/>
-      <main>
-        <div className="bg-gray-200 border rounded-sm">
-          <h2>View all tickets:</h2>
+      <Header currentView="admin" />
+      <main className="bg-dark-cream justify-center items-center w-[1200px] mt-[3em] ml-auto mr-auto flex rounded-[60px] pt-[40px] pb-[40px]">
+        <section>
+          <h2
+            className="text-center mt-0 mb-6 font-[Mulish,_sans-serif] text-[36px] font-bold leading-[44px]
+          "
+          >
+            Help Desk Tickets
+          </h2>
           <TicketList />
-        </div>
+        </section>
       </main>
     </>
   );

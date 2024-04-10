@@ -2,33 +2,61 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  /* --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 214, 219, 220;
-  --background-end-rgb: 255, 255, 255; */
-}
-
-/* dark mode below */
-@media (prefers-color-scheme: dark) {
-  :root {
-    /* --foreground-rgb: 255, 255, 255;
-    --background-start-rgb: 0, 0, 0;
-    --background-end-rgb: 0, 0, 0; */
-  }
-}
-
-body {
-  /* color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb)); */
-}
-
 @layer utilities {
-  /* .text-balance {
-    text-wrap: balance;
-  } */
+  
+}
+
+/* root */
+:root {
+  --light-cream: #fffcf7;
+  --dark-gray: #1b1b1b;
+  --dark-green: #00531b;
+  --light-green: #8acda0;
+  --black-green: #00210b;
+  --mint-green: #b8f5cc;
+  --terracotta: #cc7456;
+  --faded-peach: #eab6a4;
+  --gray: #535353;
+  --light-gray: #ebebeb;
+  --dark-cream: #fff6e9;
+  --cream: #fffaf2;
+  --blue: #70a2eb;
+  --sky-blue: #b7ceee;
+  --white: white;
+  --green: #027c2a;
+  --softgreen: #f2f4e9;
+  --mint-green-50-no-transparency: #dcfae6;
+  --untitled-ui--gray200: #eaecf0;
+  --untitled-ui--gray500: #667085;
+  --untitled-ui--gray50-2: #f9fafb;
+  --untitled-ui--white: white;
+  --untitled-ui--gray600: #475467;
+  --untitled-ui--gray900: #101828;
+  --untitled-ui--warning300: #fec84b;
+  view-transition-name: root;
+}
+
+/* html */
+html {
+  height: 100%;
+  -webkit-text-size-adjust: 100%;
+  -ms-text-size-adjust: 100%;
+  font-family: sans-serif;
+  display: block;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+/* body */
+body {
+  background-color: var(--light-cream);
+  color: var(--dark-gray);
+  font-family: Inter, sans-serif;
+  font-size: 16px;
+  line-height: 24px;
+  min-height: 100%;
+  margin: 0;
+  display: block;
 }
