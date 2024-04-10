@@ -29,7 +29,9 @@ export default function TicketSubmissionForm() {
       });
       form.reset();
       setFormSubmitted(true);
-      console.log(`Ticket successfully submitted from ${params.name} (${params.email}), with subject line: ${params.summary} and email body: ${params.description}.`)
+      console.log(
+        `Ticket successfully submitted from ${params.name} (${params.email}), with subject line: ${params.summary} and email body: ${params.description}.`
+      );
     } catch (error) {
       if (axios.isAxiosError(error)) {
         console.error((error as AxiosError).response);
@@ -42,7 +44,11 @@ export default function TicketSubmissionForm() {
 
   return (
     <div className="form-container">
-      <form className="flex flex-col mb-3" onSubmit={handleFormSubmission} onFocus={() => setFormSubmitted(false)}>
+      <form
+        className="flex flex-col mb-3"
+        onSubmit={handleFormSubmission}
+        onFocus={() => setFormSubmitted(false)}
+      >
         <Input
           label="Name: "
           id="name"
@@ -83,12 +89,19 @@ export default function TicketSubmissionForm() {
         <button
           className={`bg-green text-white text-center rounded-[100px] w-[300px] px-[30px] py-[16px] font-semibold [transition:transform_.2s] hover:scale-110 hover:bg-dark-green self-center`}
         >
-          Submit Ticket
+          Submit
         </button>
       </form>
-      <div>
-        {formSubmitted &&
-          'Thank you for submitting your request, we will look into it as soon as possible.'}
+      <div className="text-[small] flex flex-col justify-center items-center">
+        {formSubmitted && (
+          <>
+            <p>Thank you for submitting your request!</p>
+            <p>
+              We will work to resolve your issue and you will receive an email
+              when it is resolved.
+            </p>
+          </>
+        )}
       </div>
     </div>
   );

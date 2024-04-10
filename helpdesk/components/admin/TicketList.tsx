@@ -51,7 +51,12 @@ export default function TicketList() {
   return (
     <div className="tickets-container w-[1200px] px-[1em] flex flex-col">
       <div className="flex py-[1em] justify-center">
-        <label htmlFor="sorting" className='px-2 pt-[2px] text-[small] text-center align-middle'>Sort tickets by </label>
+        <label
+          htmlFor="sorting"
+          className="px-2 pt-[2px] text-[small] text-center align-middle"
+        >
+          Sort tickets by{' '}
+        </label>
         <select
           name="sorting"
           id="sorting"
