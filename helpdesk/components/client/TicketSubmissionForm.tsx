@@ -95,10 +95,9 @@ export default function TicketSubmissionForm() {
       <div className="text-[small] flex flex-col justify-center items-center">
         {formSubmitted && (
           <>
-            <p>Thank you for submitting your request!</p>
+            <p>Your request has been submitted!</p>
             <p>
-              We will work to resolve your issue and you will receive an email
-              when it is resolved.
+              We are working on your issue and will contact you soon.
             </p>
           </>
         )}

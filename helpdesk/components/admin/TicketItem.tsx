@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import axios, { AxiosError } from 'axios';
 import { TicketType } from '@/types';
-import caretImage from '@/public/caret-down.svg';
 
 interface TicketProps {
   ticket: TicketType;
@@ -26,13 +25,17 @@ export default function TicketItem({
   getTickets,
   last,
 }: TicketProps) {
-  const [updatedStatus, setUpdatedStatus] = useState(ticket.status);
-  const [updatedReply, setUpdatedReply] = useState(
+  const [updatedStatus, setUpdatedStatus] = useState<string>(ticket.status);
+  const [updatedReply, setUpdatedReply] = useState<string>(
     ticket.reply ? ticket.reply : ''
   );
+  const [isExpanded, setIsExpanded] = useState<boolean>(false);
+
+  const isRounded = last && !isExpanded;
 
   function showHiddenRow(ticketId: number) {
     const hiddenRow = document.getElementById(`hidden-row-${ticketId}`);
+
     if (activeHiddenId !== null && activeHiddenId !== ticketId) {
       const activeHiddenRow = document.getElementById(
         `hidden-row-${activeHiddenId}`
@@ -49,6 +52,7 @@ export default function TicketItem({
         setActiveHiddenId(null);
       }
     }
+    setIsExpanded(!isExpanded);
   }
 
   function handleStatusChange(event: React.ChangeEvent<HTMLSelectElement>) {
@@ -113,9 +117,7 @@ export default function TicketItem({
         className="[&:nth-child(4n+1)]:bg-white [&:nth-child(4n+3)]:bg-light-gray"
       >
         <td
-          className={`${
-            last && activeHiddenId !== ticket_id ? 'rounded-bl-[20px]' : ''
-          } px-6 py-2 text-[small]`}
+          className={`px-6 py-2 text-[small]`}
         >
           {ticket_id}
         </td>
@@ -132,11 +134,8 @@ export default function TicketItem({
             ? 'Resolved'
             : 'In Progress'}
         </td>
-        <td
-          className={`px-6 py-2 ${
-            last && activeHiddenId !== ticket_id ? 'rounded-br-[20px]' : ''
-          } `}
-        >
+        {/* <td className={`${isRounded ? 'rounded-br-[20px]' : ''} px-6 py-2`}> */}
+        <td className={`px-6 py-2`}>
           <svg
             xmlns="http://www.w3.org/2000/svg"
             width="25"
