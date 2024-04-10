@@ -22,7 +22,6 @@ export default function TicketSubmissionForm() {
     };
 
     try {
-      console.log('inside axios');
       await axios.post(`api/tickets`, {
         ...params,
       });
@@ -39,7 +38,7 @@ export default function TicketSubmissionForm() {
 
   return (
     <div className="form-container">
-      <form action="" className="" onSubmit={handleFormSubmission}>
+      <form className="flex flex-col" onSubmit={handleFormSubmission}>
         <Input
           label="Name: "
           id="name"
@@ -54,7 +53,7 @@ export default function TicketSubmissionForm() {
           type="email"
           name="email"
           id="email"
-          placeholder="name@domain.com"
+          placeholder="example@email.com"
           maxLength={320}
           required={true}
         />
@@ -63,7 +62,7 @@ export default function TicketSubmissionForm() {
           type="text"
           name="summary"
           id="summary"
-          placeholder="Enter a brief summary of issue"
+          placeholder="How can we help? (255 characters max)"
           maxLength={255}
           required={true}
         />
@@ -73,11 +72,15 @@ export default function TicketSubmissionForm() {
           type="textarea"
           id="description"
           name="description"
-          placeholder="Tell us more about your issue"
+          placeholder="Tell us more about your issue (500 characters max)"
           maxLength={500}
           required={true}
         />
-        <button>Submit Ticket</button>
+        <button
+          className={`bg-green text-white text-center rounded-[100px] w-[300px] px-[30px] py-[16px] font-semibold [transition:transform_.2s] hover:scale-110 hover:bg-dark-green self-center`}
+        >
+          Submit Ticket
+        </button>
       </form>
     </div>
   );

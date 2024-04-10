@@ -5,9 +5,6 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
-  // deconstruct the query request body
-  //   console.log('req is: ', req, 'res is: ', res);
-
   try {
     if (req.method === 'GET') {
       const getTicketsQuery = `SELECT * FROM tickets
@@ -17,7 +14,6 @@ export default async function handler(
       return res.status(200).json(tickets);
     }
     if (req.method === 'POST') {
-      console.log(req.body);
       const { name, email, description, summary } = req.body;
       const params = [name, email, description, summary];
       const saveTicketQuery = `
@@ -26,8 +22,6 @@ export default async function handler(
         RETURNING *
         `;
       const response = await db.query(saveTicketQuery, params);
-      console.log(response);
-      console.log('ticket successfully saved');
       return res.status(201).json(response.rows[0]);
     }
     if (req.method === 'PUT') {
@@ -41,7 +35,6 @@ export default async function handler(
         RETURNING *
         `;
       const response = await db.query(updateTicketQuery, params);
-      console.log('ticket successfully updated');
       return res.status(200).json(response.rows[0]);
     }
   } catch (error) {
