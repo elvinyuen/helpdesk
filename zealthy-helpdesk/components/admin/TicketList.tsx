@@ -6,6 +6,7 @@ import { TicketType } from '@/types';
 export default function TicketList() {
   const [tickets, setTickets] = useState<TicketType[]>([]);
   const [activeHiddenId, setActiveHiddenId] = useState<number | null>(null);
+  const [sortedBy, setSortedBy] = useState('date');
 
   useEffect(() => {
     getTickets();
@@ -24,8 +25,44 @@ export default function TicketList() {
     }
   }
 
+  function handleSortChange(event) {
+    setSortedBy(event.target.value);
+  }
+
+  const sortedTickets = tickets;
+  if (sortedBy === 'date') {
+    sortedTickets.sort(
+      (a: TicketType, b: TicketType) =>
+        new Date(b.created_at).getTime() - new Date(a.created_at).getTime()
+    );
+  } else if (sortedBy === 'name') {
+    sortedTickets.sort(
+      (a: TicketType, b: TicketType) =>
+        a.name.toLowerCase().charCodeAt(0) - b.name.toLowerCase().charCodeAt(0)
+    );
+  } else if (sortedBy === 'status') {
+    const statusObj = { new: 1, 'in-progress': 2, resolved: 3 };
+    sortedTickets.sort(
+      (a: TicketType, b: TicketType) =>
+        statusObj[a.status] - statusObj[b.status]
+    );
+  }
+
   return (
-    <div className="tickets-container w-[1200px] pl-[1em] pr-[1em] ">
+    <div className="tickets-container w-[1200px] px-[1em] flex flex-col">
+      <div className="flex py-[1em] justify-center">
+        <label htmlFor="sorting" className='px-2 pt-[2px] text-[small] text-center align-middle'>Sort tickets by </label>
+        <select
+          name="sorting"
+          id="sorting"
+          className="bg-white border border-light-gray text-gray text-[small] rounded-lg focus:ring-light-green focus:border-light-green block w-[150px] h-[30px]"
+          onChange={handleSortChange}
+        >
+          <option value="date">Submission Date</option>
+          <option value="name">Name</option>
+          <option value="status">Status</option>
+        </select>
+      </div>
       <table className="w-full text-left table-fixed text-dark-gray">
         <thead className="uppercase bg-green text-white">
           <tr>
@@ -42,7 +79,7 @@ export default function TicketList() {
               Email
             </th>
             <th scope="col" className="w-[200px] px-5 py-2">
-              Summary
+              Subject
             </th>
             <th scope="col" className="w-[150px] px-5 py-2">
               Status
@@ -54,7 +91,7 @@ export default function TicketList() {
           </tr>
         </thead>
         <tbody>
-          {tickets.map((ticket, index) => (
+          {sortedTickets.map((ticket, index) => (
             <TicketItem
               ticket={ticket}
               key={index}

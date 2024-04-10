@@ -82,9 +82,19 @@ export default function TicketItem({
 
   async function updateTicket(newData: TicketUpdatesType) {
     try {
-      await axios.put(`api/tickets`, {
+      const response = await axios.put(`api/tickets`, {
         ...newData,
       });
+      const { ticket_id, name, email, status, reply } = response.data;
+      console.log(
+        `Ticket #${ticket_id} updated. Latest response: ${reply} and updated status: ${
+          status === 'new'
+            ? 'New'
+            : status === 'resolved'
+            ? 'Resolved'
+            : 'In Progress'
+        } sent to ${name} (${email}).`
+      );
       getTickets();
       showHiddenRow(ticket_id);
     } catch (error) {
@@ -104,7 +114,7 @@ export default function TicketItem({
       >
         <td
           className={`${
-            last && activeHiddenId !== ticket_id && 'rounded-bl-[20px]'
+            last && activeHiddenId !== ticket_id ? 'rounded-bl-[20px]' : ''
           } px-6 py-2 text-[small]`}
         >
           {ticket_id}
@@ -123,9 +133,9 @@ export default function TicketItem({
             : 'In Progress'}
         </td>
         <td
-          className={`${
-            last && activeHiddenId !== ticket_id && 'rounded-br-[20px]'
-          } px-6 py-2`}
+          className={`px-6 py-2 ${
+            last && activeHiddenId !== ticket_id ? 'rounded-br-[20px]' : ''
+          } `}
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"

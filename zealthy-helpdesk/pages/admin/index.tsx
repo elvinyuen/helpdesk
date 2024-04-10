@@ -12,7 +12,7 @@ export default function Home() {
       <main className="bg-dark-cream justify-center items-center w-[1200px] mt-[3em] ml-auto mr-auto flex rounded-[60px] pt-[40px] pb-[40px]">
         <section>
           <h2
-            className="text-center mt-0 mb-6 font-[Mulish,_sans-serif] text-[36px] font-bold leading-[44px]
+            className="text-center p-1 text-[36px] font-bold leading-[44px]
           "
           >
             Help Desk Tickets
