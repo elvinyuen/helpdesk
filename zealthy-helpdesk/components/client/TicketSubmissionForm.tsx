@@ -3,6 +3,8 @@ import axios, { AxiosError } from 'axios';
 import Input from './Input';
 
 export default function TicketSubmissionForm() {
+  const [formSubmitted, setFormSubmitted] = useState<boolean>(false);
+
   async function handleFormSubmission(event: React.FormEvent) {
     event.preventDefault();
     const form = event.target as HTMLFormElement;
@@ -26,6 +28,8 @@ export default function TicketSubmissionForm() {
         ...params,
       });
       form.reset();
+      setFormSubmitted(true);
+      console.log(`Ticket successfully submitted from ${params.name} (${params.email}), with subject line: ${params.summary} and email body: ${params.description}.`)
     } catch (error) {
       if (axios.isAxiosError(error)) {
         console.error((error as AxiosError).response);
@@ -38,7 +42,7 @@ export default function TicketSubmissionForm() {
 
   return (
     <div className="form-container">
-      <form className="flex flex-col" onSubmit={handleFormSubmission}>
+      <form className="flex flex-col mb-3" onSubmit={handleFormSubmission} onFocus={() => setFormSubmitted(false)}>
         <Input
           label="Name: "
           id="name"
@@ -58,7 +62,7 @@ export default function TicketSubmissionForm() {
           required={true}
         />
         <Input
-          label="Summary: "
+          label="Subject: "
           type="text"
           name="summary"
           id="summary"
@@ -82,6 +86,10 @@ export default function TicketSubmissionForm() {
           Submit Ticket
         </button>
       </form>
+      <div>
+        {formSubmitted &&
+          'Thank you for submitting your request, we will look into it as soon as possible.'}
+      </div>
     </div>
   );
 }
