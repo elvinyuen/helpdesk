@@ -25,7 +25,7 @@ export default function TicketList() {
     }
   }
 
-  function handleSortChange(event) {
+  function handleSortChange(event: React.ChangeEvent<HTMLSelectElement>) {
     setSortedBy(event.target.value);
   }
 
@@ -41,7 +41,11 @@ export default function TicketList() {
         a.name.toLowerCase().charCodeAt(0) - b.name.toLowerCase().charCodeAt(0)
     );
   } else if (sortedBy === 'status') {
-    const statusObj = { new: 1, 'in-progress': 2, resolved: 3 };
+    const statusObj: { [key: string]: number } = {
+      new: 1,
+      'in-progress': 2,
+      resolved: 3,
+    };
     sortedTickets.sort(
       (a: TicketType, b: TicketType) =>
         statusObj[a.status] - statusObj[b.status]
